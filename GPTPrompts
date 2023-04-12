@@ -1,0 +1,745 @@
+I want to make a chess game with an alternative moveset. I want to do it in python with a gui. Can you please write me some python that will get me started with this 
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sure! I can provide you with a basic structure to create a chess game with an alternative moveset in Python using the pygame library for the GUI. You can modify the moveset by changing the logic in the get_valid_moves() functions for each piece.
+
+First, you'll need to install pygame. You can do this using pip:
+
+sh
+Copy code
+pip install pygame
+Now, you can use the following code as a starting point for your custom chess game:
+
+python
+Copy code
+import pygame
+import sys
+
+# Constants
+BOARD_SIZE = 8
+SQUARE_SIZE = 80
+WIDTH, HEIGHT = BOARD_SIZE * SQUARE_SIZE, BOARD_SIZE * SQUARE_SIZE
+
+# Colors
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+GREEN = (0, 255, 0)
+
+# Initialize pygame
+pygame.init()
+
+# Load piece images
+pieces = {}
+for color in ["white", "black"]:
+    for piece in ["pawn", "knight", "bishop", "rook", "queen", "king"]:
+        img = pygame.image.load(f"{color}_{piece}.png")
+        img = pygame.transform.scale(img, (SQUARE_SIZE, SQUARE_SIZE))
+        pieces[f"{color}_{piece}"] = img
+
+class Piece:
+    def __init__(self, color, x, y):
+        self.color = color
+        self.x = x
+        self.y = y
+
+    def get_valid_moves(self, board):
+        # Override this method in child classes to define custom movesets
+        pass
+
+class Pawn(Piece):
+    def __init__(self, color, x, y):
+        super().__init__(color, x, y)
+        self.name = "pawn"
+
+    def get_valid_moves(self, board):
+        # Implement your custom pawn moveset here
+        pass
+
+# Add other piece classes (Knight, Bishop, Rook, Queen, King) here
+
+def create_board():
+    board = [[None for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
+
+    # Place pieces on the board
+    # Modify this part to change the initial position of pieces
+
+    # Pawns
+    for i in range(BOARD_SIZE):
+        board[1][i] = Pawn("black", 1, i)
+        board[6][i] = Pawn("white", 6, i)
+
+    # Other pieces
+    # ...
+
+    return board
+
+def draw_board(screen, board):
+    for y in range(BOARD_SIZE):
+        for x in range(BOARD_SIZE):
+            rect = pygame.Rect(x * SQUARE_SIZE, y * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE)
+            pygame.draw.rect(screen, WHITE if (x + y) % 2 == 0 else BLACK, rect)
+
+            piece = board[y][x]
+            if piece:
+                screen.blit(pieces[f"{piece.color}_{piece.name}"], rect)
+
+def main():
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("Custom Chess")
+
+    board = create_board()
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+                sys.exit()
+
+        draw_board(screen, board)
+        pygame.display.flip()
+
+if __name__ == "__main__":
+    main()
+This code initializes a basic chessboard with pawns only. You'll need to add other piece classes (Knight, Bishop, Rook, Queen, King) and implement the get_valid_moves() function for each class to define their custom movesets. You should also create or find appropriate images for each piece, named according to the
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+please change the black square color to brown to better visibility. Please add in the rest of the pieces to the board
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Certainly! I've changed the black square color to brown for better visibility and added the rest of the pieces to the board. Here's the updated code:
+
+python
+Copy code
+import pygame
+import sys
+
+# Constants
+BOARD_SIZE = 8
+SQUARE_SIZE = 80
+WIDTH, HEIGHT = BOARD_SIZE * SQUARE_SIZE, BOARD_SIZE * SQUARE_SIZE
+
+# Colors
+WHITE = (255, 255, 255)
+BROWN = (139, 69, 19)
+GREEN = (0, 255, 0)
+
+# Initialize pygame
+pygame.init()
+
+# Load piece images
+pieces = {}
+for color in ["white", "black"]:
+    for piece in ["pawn", "knight", "bishop", "rook", "queen", "king"]:
+        img = pygame.image.load(f"{color}_{piece}.png")
+        img = pygame.transform.scale(img, (SQUARE_SIZE, SQUARE_SIZE))
+        pieces[f"{color}_{piece}"] = img
+
+class Piece:
+    def __init__(self, color, x, y):
+        self.color = color
+        self.x = x
+        self.y = y
+
+    def get_valid_moves(self, board):
+        # Override this method in child classes to define custom movesets
+        pass
+
+class Pawn(Piece):
+    def __init__(self, color, x, y):
+        super().__init__(color, x, y)
+        self.name = "pawn"
+
+    def get_valid_moves(self, board):
+        # Implement your custom pawn moveset here
+        pass
+
+# Add other piece classes (Knight, Bishop, Rook, Queen, King) here
+
+class Knight(Piece):
+    def __init__(self, color, x, y):
+        super().__init__(color, x, y)
+        self.name = "knight"
+
+    def get_valid_moves(self, board):
+        # Implement your custom knight moveset here
+        pass
+
+class Bishop(Piece):
+    def __init__(self, color, x, y):
+        super().__init__(color, x, y)
+        self.name = "bishop"
+
+    def get_valid_moves(self, board):
+        # Implement your custom bishop moveset here
+        pass
+
+class Rook(Piece):
+    def __init__(self, color, x, y):
+        super().__init__(color, x, y)
+        self.name = "rook"
+
+    def get_valid_moves(self, board):
+        # Implement your custom rook moveset here
+        pass
+
+class Queen(Piece):
+    def __init__(self, color, x, y):
+        super().__init__(color, x, y)
+        self.name = "queen"
+
+    def get_valid_moves(self, board):
+        # Implement your custom queen moveset here
+        pass
+
+class King(Piece):
+    def __init__(self, color, x, y):
+        super().__init__(color, x, y)
+        self.name = "king"
+
+    def get_valid_moves(self, board):
+        # Implement your custom king moveset here
+        pass
+
+def create_board():
+    board = [[None for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
+
+    # Place pieces on the board
+    # Modify this part to change the initial position of pieces
+
+    # Pawns
+    for i in range(BOARD_SIZE):
+        board[1][i] = Pawn("black", 1, i)
+        board[6][i] = Pawn("white", 6, i)
+
+    # Rooks
+    board[0][0] = Rook("black", 0, 0)
+    board[0][7] = Rook("black", 0, 7)
+
+    
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+continue
+
+    
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+I apologize for the incomplete response. Here's the continuation of the code with the rest of the pieces added to the board:
+
+python
+Copy code
+    board[7][0] = Rook("white", 7, 0)
+    board[7][7] = Rook("white", 7, 7)
+
+    # Knights
+    board[0][1] = Knight("black", 0, 1)
+    board[0][6] = Knight("black", 0, 6)
+    board[7][1] = Knight("white", 7, 1)
+    board[7][6] = Knight("white", 7, 6)
+
+    # Bishops
+    board[0][2] = Bishop("black", 0, 2)
+    board[0][5] = Bishop("black", 0, 5)
+    board[7][2] = Bishop("white", 7, 2)
+    board[7][5] = Bishop("white", 7, 5)
+
+    # Queens
+    board[0][3] = Queen("black", 0, 3)
+    board[7][3] = Queen("white", 7, 3)
+
+    # Kings
+    board[0][4] = King("black", 0, 4)
+    board[7][4] = King("white", 7, 4)
+
+    return board
+
+def draw_board(screen, board):
+    for y in range(BOARD_SIZE):
+        for x in range(BOARD_SIZE):
+            rect = pygame.Rect(x * SQUARE_SIZE, y * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE)
+            pygame.draw.rect(screen, WHITE if (x + y) % 2 == 0 else BROWN, rect)
+
+            piece = board[y][x]
+            if piece:
+                screen.blit(pieces[f"{piece.color}_{piece.name}"], rect)
+
+def main():
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("Custom Chess")
+
+    board = create_board()
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+                sys.exit()
+
+        draw_board(screen, board)
+        pygame.display.flip()
+
+if __name__ == "__main__":
+    main()
+
+
+Now all the chess pieces are properly placed on the board. You can implement custom movesets for each piece by modifying the get_valid_moves() function in the corresponding classes (Pawn, Knight, Bishop, Rook, Queen, King).
+
+    
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Good. Please add in logic to show whos turn it is. When a piece is selected, I want the squares that are valid moves to have a yellow highlight
+
+    
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+I've added logic to track turns, select pieces, and highlight valid squares with a yellow color. The get_valid_moves() function for each piece class should return a list of valid move coordinates (x, y). Here's the updated code:
+
+python
+Copy code
+import pygame
+import sys
+
+# Constants
+BOARD_SIZE = 8
+SQUARE_SIZE = 80
+WIDTH, HEIGHT = BOARD_SIZE * SQUARE_SIZE, BOARD_SIZE * SQUARE_SIZE
+
+# Colors
+WHITE = (255, 255, 255)
+BROWN = (139, 69, 19)
+GREEN = (0, 255, 0)
+YELLOW = (255, 255, 0)
+
+# Initialize pygame
+pygame.init()
+
+# Load piece images
+pieces = {}
+for color in ["white", "black"]:
+    for piece in ["pawn", "knight", "bishop", "rook", "queen", "king"]:
+        img = pygame.image.load(f"{color}_{piece}.png")
+        img = pygame.transform.scale(img, (SQUARE_SIZE, SQUARE_SIZE))
+        pieces[f"{color}_{piece}"] = img
+
+class Piece:
+    def __init__(self, color, x, y):
+        self.color = color
+        self.x = x
+        self.y = y
+
+    def get_valid_moves(self, board):
+        # Override this method in child classes to define custom movesets
+        pass
+
+# Add piece classes (Pawn, Knight, Bishop, Rook, Queen, King) here
+
+# ...
+
+def create_board():
+    board = [[None for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
+
+    # Place pieces on the board
+    # Modify this part to change the initial position of pieces
+
+    # Pawns, Rooks, Knights, Bishops, Queens, and Kings
+
+    # ...
+
+    return board
+
+def draw_board(screen, board, valid_moves=None):
+    valid_moves = valid_moves or []
+
+    for y in range(BOARD_SIZE):
+        for x in range(BOARD_SIZE):
+            rect = pygame.Rect(x * SQUARE_SIZE, y * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE)
+            pygame.draw.rect(screen, WHITE if (x + y) % 2 == 0 else BROWN, rect)
+
+            if (x, y) in valid_moves:
+                pygame.draw.rect(screen, YELLOW, rect, 5)
+
+            piece = board[y][x]
+            if piece:
+                screen.blit(pieces[f"{piece.color}_{piece.name}"], rect)
+
+def main():
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("Custom Chess")
+
+    board = create_board()
+    running = True
+    turn = "white"
+    selected_piece = None
+    valid_moves = []
+
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                x, y = event.pos
+                grid_x, grid_y = x // SQUARE_SIZE, y // SQUARE_SIZE
+                piece = board[grid_y][grid_x]
+
+                if selected_piece:
+                    if (grid_x, grid_y) in valid_moves:
+                        board[selected_piece.y][selected_piece.x] = None
+                        board[grid_y][grid_x] = selected_piece
+                        selected_piece.x, selected_piece.y = grid_x, grid_y
+                        turn = "black" if turn == "white" else "white"
+                    selected_piece = None
+                    valid_moves = []
+                elif piece and piece.color == turn:
+                    selected_piece = piece
+                    valid_moves = piece.get_valid_moves(board)
+
+        draw_board(screen, board,
+
+            
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+continue
+           
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+I apologize for the incomplete response. Here's the continuation of the code:
+
+python
+Copy code
+        valid_moves)
+        pygame.display.flip()
+
+if __name__ == "__main__":
+    main()
+
+
+This updated code includes turn tracking, piece selection, and yellow highlighting for valid move squares. When you click on a piece, the get_valid_moves() function is called to get the list of valid moves for that piece. The squares corresponding to these valid moves are highlighted in yellow. When you click on one of the highlighted squares, the piece moves to that square, and the turn switches to the other player.
+
+Make sure to implement the get_valid_moves() function for each piece class (Pawn, Knight, Bishop, Rook, Queen, King) to return a list of valid move coordinates (x, y) for the custom moveset you want.
+
+           
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Hello from the pygame community. https://www.pygame.org/contribute.html
+Traceback (most recent call last):
+  File "C:\Users\Alex2\AppData\Local\Programs\Python\Python310\lib\runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "C:\Users\Alex2\AppData\Local\Programs\Python\Python310\lib\runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "c:\Users\Alex2\.vscode\extensions\ms-python.python-2023.6.0\pythonFiles\lib\python\debugpy\__main__.py", line 39, in <module>
+    cli.main()
+  File "c:\Users\Alex2\.vscode\extensions\ms-python.python-2023.6.0\pythonFiles\lib\python\debugpy/..\debugpy\server\cli.py", line 430, in main
+    run()
+  File "c:\Users\Alex2\.vscode\extensions\ms-python.python-2023.6.0\pythonFiles\lib\python\debugpy/..\debugpy\server\cli.py", line 284, in run_file
+    runpy.run_path(target, run_name="__main__")
+  File "c:\Users\Alex2\.vscode\extensions\ms-python.python-2023.6.0\pythonFiles\lib\python\debugpy\_vendored\pydevd\_pydevd_bundle\pydevd_runpy.py", line 321, in 
+run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "c:\Users\Alex2\.vscode\extensions\ms-python.python-2023.6.0\pythonFiles\lib\python\debugpy\_vendored\pydevd\_pydevd_bundle\pydevd_runpy.py", line 135, in 
+_run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "c:\Users\Alex2\.vscode\extensions\ms-python.python-2023.6.0\pythonFiles\lib\python\debugpy\_vendored\pydevd\_pydevd_bundle\pydevd_runpy.py", line 124, in 
+_run_code
+    exec(code, run_globals)
+  File "A:\Software\Code Folder Real\Python Projects\ChessProgram\ChessMain.py", line 186, in <module>
+    main()
+  File "A:\Software\Code Folder Real\Python Projects\ChessProgram\ChessMain.py", line 171, in main
+    if (grid_x, grid_y) in valid_moves:
+TypeError: argument of type 'NoneType' is not iterable
+PS A:\Software\Code Folder Real\Python Projects\ChessProgram> 
+
+           
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It seems you're encountering a TypeError because the valid_moves variable is set to None. This error is likely due to an incomplete implementation of the get_valid_moves() method in one of the piece classes. Make sure that all the piece classes have a get_valid_moves() method that returns a list of valid move coordinates (x, y).
+
+As a temporary fix, you can modify the base Piece class to return an empty list in the get_valid_moves() method, like this:
+
+python
+Copy code
+class Piece:
+    def __init__(self, color, x, y):
+        self.color = color
+        self.x = x
+        self.y = y
+
+    def get_valid_moves(self, board):
+        # Override this method in child classes to define custom movesets
+        return []  # Return an empty list instead of None
+
+
+With this change, you should no longer encounter the TypeError. However, make sure to implement the get_valid_moves() method in each piece class (Pawn, Knight, Bishop, Rook, Queen, King) to return a list of valid move coordinates (x, y) for the custom moveset you want.
+
+           
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Please edit the following to define the valid moves for each piece according to chess rules: class Pawn(Piece):
+    def __init__(self, color, x, y):
+        super().__init__(color, x, y)
+        self.name = "pawn"
+        ...
+        ...
+        ...
+        ...
+
+           
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Here's the implementation of the get_valid_moves() method for each piece according to standard chess rules:
+
+python
+Copy code
+class Pawn(Piece):
+    def __init__(self, color, x, y):
+        super().__init__(color, x, y)
+        self.name = "pawn"
+
+    def get_valid_moves(self, board):
+        moves = []
+        direction = 1 if self.color == "white" else -1
+        start_row = 1 if self.color == "white" else 6
+
+        # Forward move
+        if 0 <= self.y + direction < BOARD_SIZE and not board[self.y + direction][self.x]:
+            moves.append((self.x, self.y + direction))
+
+            # Double move if pawn is at its starting position
+            if self.y == start_row and not board[self.y + 2 * direction][self.x]:
+                moves.append((self.x, self.y + 2 * direction))
+
+        # Capturing moves
+        for dx in [-1, 1]:
+            if 0 <= self.x + dx < BOARD_SIZE and 0 <= self.y + direction < BOARD_SIZE:
+                target = board[self.y + direction][self.x + dx]
+                if target and target.color != self.color:
+                    moves.append((self.x + dx, self.y + direction))
+
+        return moves
+
+
+class Knight(Piece):
+    def __init__(self, color, x, y):
+        super().__init__(color, x, y)
+        self.name = "knight"
+
+    def get_valid_moves(self, board):
+        moves = []
+        knight_moves = [
+            (-2, -1), (-1, -2), (1, -2), (2, -1),
+            (2, 1), (1, 2), (-1, 2), (-2, 1)
+        ]
+
+        for dx, dy in knight_moves:
+            new_x, new_y = self.x + dx, self.y + dy
+            if 0 <= new_x < BOARD_SIZE and 0 <= new_y < BOARD_SIZE:
+                target = board[new_y][new_x]
+                if not target or target.color != self.color:
+                    moves.append((new_x, new_y))
+
+        return moves
+
+
+class Bishop(Piece):
+    def __init__(self, color, x, y):
+        super().__init__(color, x, y)
+        self.name = "bishop"
+
+    def get_valid_moves(self, board):
+        moves = []
+
+        for dx, dy in [(-1, -1), (-1, 1), (1, -1), (1, 1)]:
+            new_x, new_y = self.x + dx, self.y + dy
+            while 0 <= new_x < BOARD_SIZE and 0 <= new_y < BOARD_SIZE:
+                target = board[new_y][new_x]
+                if not target:
+                    moves.append((new_x, new_y))
+                else:
+                    if target.color != self.color:
+                        moves.append((new_x, new_y))
+                    break
+                new_x += dx
+                new_y += dy
+
+        return moves
+
+
+class Rook(Piece):
+    def __init__(self, color, x, y):
+        super().__init__(color, x, y)
+        self.name = "rook"
+
+    def get_valid_moves(self, board):
+        moves = []
+
+        for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+            new_x, new_y = self.x + dx, self.y + dy
+            while 0 <= new_x < BOARD_SIZE and 0 <= new_y < BOARD_SIZE:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+continue
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+bash
+Copy code
+            target = board[new_y][new_x]
+            if not target:
+                moves.append((new_x, new_y))
+            else:
+                if target.color != self.color:
+                    moves.append((new_x, new_y))
+                break
+            new_x += dx
+            new_y += dy
+
+    return moves
+
+
+class Queen(Piece):
+def init(self, color, x, y):
+super().init(color, x, y)
+self.name = "queen"
+
+python
+Copy code
+def get_valid_moves(self, board):
+    moves = []
+
+    for dx, dy in [(-1, -1), (-1, 1), (1, -1), (1, 1), (-1, 0), (1, 0), (0, -1), (0, 1)]:
+        new_x, new_y = self.x + dx, self.y + dy
+        while 0 <= new_x < BOARD_SIZE and 0 <= new_y < BOARD_SIZE:
+            target = board[new_y][new_x]
+            if not target:
+                moves.append((new_x, new_y))
+            else:
+                if target.color != self.color:
+                    moves.append((new_x, new_y))
+                break
+            new_x += dx
+            new_y += dy
+
+    return moves
+
+
+class King(Piece):
+def init(self, color, x, y):
+super().init(color, x, y)
+self.name = "king"
+
+rust
+Copy code
+def get_valid_moves(self, board):
+    moves = []
+
+    for dx in [-1, 0, 1]:
+        for dy in [-1, 0, 1]:
+            if dx == 0 and dy == 0:
+                continue
+
+            new_x, new_y = self.x + dx, self.y + dy
+            if 0 <= new_x < BOARD_SIZE and 0 <= new_y < BOARD_SIZE:
+                target = board[new_y][new_x]
+                if not target or target.color != self.color:
+                    moves.append((new_x, new_y))
+
+    return moves
+
+vbnet
+Copy code
+
+The code above implements the `get_valid_moves()` method for each piece class (Pawn, Knight, Bishop, Rook, Queen, King) according to the standard chess rules. Please note that this implementation does not handle more advanced rules like castling, en passant, or pawn promotion. You may need to modify the code further to accommodate those rules.
+
+
+Hello from the pygame community. https://www.pygame.org/contribute.html
+Traceback (most recent call last):
+  File "C:\Users\Alex2\AppData\Local\Programs\Python\Python310\lib\runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "C:\Users\Alex2\AppData\Local\Programs\Python\Python310\lib\runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "c:\Users\Alex2\.vscode\extensions\ms-python.python-2023.6.0\pythonFiles\lib\python\debugpy\__main__.py", line 39, in <module>
+    cli.main()
+  File "c:\Users\Alex2\.vscode\extensions\ms-python.python-2023.6.0\pythonFiles\lib\python\debugpy/..\debugpy\server\cli.py", line 430, in main
+    run()
+  File "c:\Users\Alex2\.vscode\extensions\ms-python.python-2023.6.0\pythonFiles\lib\python\debugpy/..\debugpy\server\cli.py", line 284, in run_file
+    runpy.run_path(target, run_name="__main__")
+  File "c:\Users\Alex2\.vscode\extensions\ms-python.python-2023.6.0\pythonFiles\lib\python\debugpy\_vendored\pydevd\_pydevd_bundle\pydevd_runpy.py", line 321, in 
+run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "c:\Users\Alex2\.vscode\extensions\ms-python.python-2023.6.0\pythonFiles\lib\python\debugpy\_vendored\pydevd\_pydevd_bundle\pydevd_runpy.py", line 135, in 
+_run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "c:\Users\Alex2\.vscode\extensions\ms-python.python-2023.6.0\pythonFiles\lib\python\debugpy\_vendored\pydevd\_pydevd_bundle\pydevd_runpy.py", line 124, in 
+_run_code
+    exec(code, run_globals)
+  File "A:\Software\Code Folder Real\Python Projects\ChessProgram\ChessMain.py", line 272, in <module>
+    main()
+  File "A:\Software\Code Folder Real\Python Projects\ChessProgram\ChessMain.py", line 268, in main
+    draw_board(screen, board, valid_moves)
+  File "A:\Software\Code Folder Real\Python Projects\ChessProgram\ChessMain.py", line 232, in draw_board
+    screen.blit(pieces[f"{piece.color}_{piece.name}"], rect)
+AttributeError: 'Queen' object has no attribute 'name'
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It seems there is an issue with the initialization methods in the Queen and King classes. You are using init() instead of __init__() for both classes. Here's the corrected version of both classes:
+
+python
+Copy code
+class Queen(Piece):
+    def __init__(self, color, x, y):
+        super().__init__(color, x, y)
+        self.name = "queen"
+
+    def get_valid_moves(self, board):
+        moves = []
+
+        for dx, dy in [(-1, -1), (-1, 1), (1, -1), (1, 1), (-1, 0), (1, 0), (0, -1), (0, 1)]:
+            new_x, new_y = self.x + dx, self.y + dy
+            while 0 <= new_x < BOARD_SIZE and 0 <= new_y < BOARD_SIZE:
+                target = board[new_y][new_x]
+            if not target:
+                moves.append((new_x, new_y))
+            else:
+                if target.color != self.color:
+                    moves.append((new_x, new_y))
+                break
+            new_x += dx
+            new_y += dy
+        
+        return moves
+
+class King(Piece):
+    def __init__(self, color, x, y):
+        super().__init__(color, x, y)
+        self.name = "king"
+
+    def get_valid_moves(self, board):
+        moves = []
+
+        for dx in [-1, 0, 1]:
+            for dy in [-1, 0, 1]:
+                if dx == 0 and dy == 0:
+                    continue
+
+                new_x, new_y = self.x + dx, self.y + dy
+                if 0 <= new_x < BOARD_SIZE and 0 <= new_y < BOARD_SIZE:
+                    target = board[new_y][new_x]
+                    if not target or target.color != self.color:
+                        moves.append((new_x, new_y))
+
+        return moves
+
+
+Make these changes and your code should work as expected.
